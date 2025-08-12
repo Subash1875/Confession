@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from app.forms.ConfessionForm import ConfessionForm
 from django.contrib.auth.decorators import login_required
+from app.models.ConfessionModel import Confessions
 
 
 @login_required(login_url="login")
 def index(request):
-    return render(request, "index.html")
+    confessions = Confessions.objects.all()
+
+    return render(request, "index.html", {"confessions" : confessions})
 
 
 
