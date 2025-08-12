@@ -1,10 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from app.forms.ConfessionForm import ConfessionForm
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url="login")
 def index(request):
     return render(request, "index.html")
 
 
 
+@login_required(login_url="login")
 def addConfession(request):
-    return render(request, "addConfession.html")
+    if request.method == "POST":
+        confessionForm = ConfessionForm(request.POST)
+
+        if confessionForm.is_valid():
+            confessionForm = confessionForm.save(commit=False)
+            confessionForm.user = request.user
+            confessionForm.save()
+            return redirect("index")
+
+    else:
+        confessionForm = ConfessionForm()
+
+
+    return render(request, "addConfession.html", {"confessionForm" : confessionForm})

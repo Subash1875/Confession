@@ -6,5 +6,5 @@ class ConfessionForm(forms.ModelForm):
         model = Confessions
         fields = ["content"]
         widgets = {
-            "content" : forms.Textarea(attrs={"class" : "form-control", "id" : "content", "placeholder" : "Write whatever you want...."})
+            "content" : forms.Textarea(attrs={"class" : "form-control", "placeholder" : "Write whatever you want...."})
         }
