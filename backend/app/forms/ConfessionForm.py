@@ -5,7 +5,7 @@ class ConfessionForm(forms.ModelForm):
     content = forms.CharField(
         strip=False,
         widget=forms.Textarea(attrs={
-            "class": "form-control",
+            "class": "form-control px-2",
             "placeholder": "Write whatever you want...."
         })
     )
