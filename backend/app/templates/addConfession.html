@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}add your Confessions here..{% endblock title %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center my-4">
+
+    <div class="d-flex flex-column shadow rounded-4 p-5 gap-3" style="min-width: 450px; width: 50vw;">
+
+        <p class="h4 fst-italic">add your Confessions here</p>
+
+        <form method="post" class="d-flex gap-3 flex-column">
+            {% csrf_token %}
+
+            <div>
+                
+            </div>
+
+            <input type="submit" class="btn btn-danger w-25" value="add Confession">
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock content %}
