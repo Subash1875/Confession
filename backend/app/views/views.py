@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from app.forms.ConfessionForm import ConfessionForm
 from django.contrib.auth.decorators import login_required
 from app.models.ConfessionModel import Confessions
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 @login_required(login_url="login")
@@ -29,4 +31,12 @@ def addConfession(request):
 
 
 def profile(request, user):
-    return HttpResponse(f"hi {user}")
+
+    try:
+        checkUser = User.objects.get(username=user)
+        confessions = checkUser.confessions.all()
+    except User.DoesNotExist:
+        checkUser = None
+        confessions = []
+
+    return render(request, "profile.html", {"confessions" : confessions, "user" : checkUser})

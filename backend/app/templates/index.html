@@ -8,10 +8,9 @@
     <div class="row justify-content-evenly g-4">
 
         {% for confession in confessions %}
-        {% include "confessionTemplate.html" %}
+        {% include "components/confessionTemplate.html" %}
         {% empty %}
         <strong class="fst-italic text-danger">No Confessions to show</strong>
-
         {% endfor %}
 
     </div>

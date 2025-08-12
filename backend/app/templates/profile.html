@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{request.user.username}}'s Confessions{% endblock title %}
+
+{% block content %}
+
+{% if user %}
+<div class="my-5 px-4">
+
+    <div class="d-flex">
+        <div>
+            <p class="h3">{{user.username|capfirst}}</p>
+            <p>{{user.username}} started using Confession {{user.date_joined|timesince}}</p>
+        </div>
+
+        <div class="ms-auto">
+
+            <button id="logout-btn" class="btn btn-danger d-flex gap-2 justify-content-center align-items-center"
+                style="font-size: 15px;">
+                <i class="bi bi-box-arrow-left" style="font-size: 1.2rem;"></i>
+                <strong class="fst-italic" style="font-size: 1.2rem;">logout</strong>
+            </button>
+        </div>
+
+    </div>
+    <hr>
+
+
+    <div class="row justify-content-evenly g-4 mt-4">
+        {% for confession in confessions %}
+        {% include "components/confessionTemplate.html" %}
+        {% empty %}
+        <p class="h4">No Confessions yet</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% else %}
+{% include "components/404.html" %}
+{% endif %}
+
+{% include "components/logoutPopup.html" %}
+
+{% endblock content %}
