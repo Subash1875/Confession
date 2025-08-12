@@ -1,29 +1,66 @@
-{% extends "base.html" %}
-{% block title %}login to view and share your confessions{% endblock title %}
+{% extends "base.html" %} {% block title %}login to view and share your
+confessions{% endblock title %}
 
 {% block content %}
 
-<div class="d-flex justify-content-center my-4">
 
-    <div class="d-flex flex-column align-items-center gap-4 rounded-4 shadow p-5" style="min-width: 400px;">
+{% if loginForm.errors %}
+<div id="loginFormError" class="alert alert-danger position-fixed end-0 m-5" style="max-width: 400px">
+    <ul class="mb-0">
+        {% for field, errors in loginForm.errors.items %}
 
-        <p class="h4 fst-italic">Login</p>
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
 
-        <form method="post">
+        {% for error in loginForm.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+
+<div class="d-flex justify-content-center my-5">
+    <div class="d-flex flex-column align-items-center gap-4 rounded-4 shadow p-5" style="min-width: 400px; width: 27vw">
+        <p class="h3 fst-italic">Login</p>
+
+        <form method="post" class="d-flex flex-column gap-3 w-100">
             {% csrf_token %}
 
+            <div class="form-floating">
+                {{loginForm.username}}
+                <label for="username">Username</label>
+            </div>
 
-            <input type="submit" value="login" class="btn btn-danger">
+            <div class="form-floating">
+                {{loginForm.password}}
+                <label for="username">Password</label>
+            </div>
 
+            <input type="submit" value="login" class="btn btn-danger mt-3" />
         </form>
 
         <div class="d-flex gap-2">
             <p class="h6">new to Confession?</p>
-            <a href="" class="h6 text-decoration-none text-info">Signup</a>
+            <a href="{% url 'signup' %}" class="h6 text-decoration-none text-info">Signup</a>
         </div>
-
     </div>
-
 </div>
 
 {% endblock content %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const alertBox = document.getElementById("formErrors");
+        if (alertBox) {
+            setTimeout(() => {
+                alertBox.style.transition = "opacity 0.5s ease";
+                alertBox.style.opacity = "0";
+                setTimeout(() => alertBox.remove(), 500);
+            }, 5000); // 5 seconds
+        }
+    });
+</script>

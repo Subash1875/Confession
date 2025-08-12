@@ -1,9 +1,12 @@
 from django.urls import path
-from app import views
+from app.views import authViews, views
 
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("signup", views.signup, name="signup"),
-    path("login", views.login, name="login"),
+
+    # auth routes
+    path("signup", authViews.signup, name="signup"),
+    path("login", authViews.userLogin, name="login"),
+    path("logout", authViews.userLogout, name="logout"),
 ]
