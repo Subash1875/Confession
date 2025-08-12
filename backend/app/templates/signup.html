@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Signup to explore Confessions{% endblock title %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center my-5">
+
+    <div class="p-5 rounded-4 shadow d-flex flex-column align-items-center gap-4" style="min-width: 400px;">
+
+        <h4 class="fst-italic">Signup</h4>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div>
+                <label for="username" class="form-label"></label>
+            </div>
+
+            <div>
+                <label for="password1" class="form-label"></label>
+            </div>
+
+            <div>
+                <label for="password2" class="form-label"></label>
+            </div>
+
+            <input type="submit" value="Signup" class="btn btn-danger">
+
+        </form>
+
+        <div class="d-flex gap-2">
+            <p class="h6">already have an account?</p>
+            <a href="" class="h6 text-decoration-none text-info">login</a>
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock content %}

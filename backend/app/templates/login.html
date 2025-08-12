@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}login to view and share your confessions{% endblock title %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center my-4">
+
+    <div class="d-flex flex-column align-items-center gap-4 rounded-4 shadow p-5" style="min-width: 400px;">
+
+        <p class="h4 fst-italic">Login</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+
+            <input type="submit" value="login" class="btn btn-danger">
+
+        </form>
+
+        <div class="d-flex gap-2">
+            <p class="h6">new to Confession?</p>
+            <a href="" class="h6 text-decoration-none text-info">Signup</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}
