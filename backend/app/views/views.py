@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from app.forms.ConfessionForm import ConfessionForm
 from django.contrib.auth.decorators import login_required
 from app.models.ConfessionModel import Confessions
@@ -9,7 +9,6 @@ def index(request):
     confessions = Confessions.objects.all()
 
     return render(request, "index.html", {"confessions" : confessions})
-
 
 
 @login_required(login_url="login")
@@ -26,5 +25,8 @@ def addConfession(request):
     else:
         confessionForm = ConfessionForm()
 
-
     return render(request, "addConfession.html", {"confessionForm" : confessionForm})
+
+
+def profile(request, user):
+    return HttpResponse(f"hi {user}")

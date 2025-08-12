@@ -11,7 +11,7 @@
 
 
         <div class="col-10 col-lg-5 border border-1 rounded-3 d-flex flex-column px-5 gap-4 pt-5 pb-3">
-            <a href="/" class="h4 fst-italic text-decoration-none">{{confession.user}}</a>
+            <a href="{% url 'profile' confession.user.username %}" class="h4 fst-italic text-decoration-none">{{confession.user.username}}</a>
             <div class="overflow-auto" style="max-height: 200px;">
                 <span class="fst-italic" style="white-space: pre-wrap;">{{confession.content}}</span>
                 <hr>
@@ -30,7 +30,7 @@
                     </a>
 
 
-                    <a href="/">
+                    <a href="{% url 'comments' confession.id %}">
                         <i class="bi bi-chat-left-heart" style="font-size: 1.5rem; color: #000;"></i>
                     </a>
 
