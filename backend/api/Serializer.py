@@ -5,4 +5,4 @@ from app.models.ConfessionModel import Confessions
 class ConfessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Confessions
-        fields = ["content"]
+        fields = "__all__"

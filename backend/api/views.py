@@ -34,7 +34,7 @@ class PkConfessionView(APIView):
     
     def put(self, request, id):
         confession = self.get_confession(id)
-        result = ConfessionSerializer(Confessions, data=request.data, partial=True)
+        result = ConfessionSerializer(confession, data=request.data, partial=True)
         
         if result.is_valid():
             result.save()
