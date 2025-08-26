@@ -1,11 +1,34 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { Suspense } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./static/css/style.css";
 
+// components and pages
+import Nav from "./pages/components/Nav";
+
 function App() {
-  return <>
-    <h1 className="text-center">hello world!</h1>
-  </>
+  const Index = React.lazy(() => import("./pages/Index"));
+
+  return (
+    <>
+      <BrowserRouter>
+        <Nav />
+        <main className="px-4">
+          <Suspense>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route
+                path="*"
+                element={
+                  <h3 className="">The Provided URL is not available</h3>
+                }
+              />
+            </Routes>
+          </Suspense>
+        </main>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;
