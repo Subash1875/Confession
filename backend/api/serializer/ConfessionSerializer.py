@@ -3,6 +3,8 @@ from app.models.ConfessionModel import Confessions
 
 
 class ConfessionReadSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField() 
+
     class Meta:
         model = Confessions
         fields = "__all__"

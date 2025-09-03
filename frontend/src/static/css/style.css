@@ -16,3 +16,13 @@ main {
     height: 30px;
     width: 30px;
 }
+
+.loading {
+    height: 1000%;
+    width: 100vw;
+    background-color: #333333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+}
