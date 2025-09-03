@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 import Cookie from "js-cookie";
@@ -32,7 +32,25 @@ const ConfessionAPI = () => {
     }
   };
 
-  return { message, loading, confessions, getConfessions };
+  const getUserConfession = async (user) => {
+    setMessage(null);
+    setLoading(true);
+
+    try {
+      const repsonse = await axios.get(`/api/confessions/${user}`, {
+        headers: { Authorization: `Token ${token}` },
+      });
+      setConfessions(repsonse.data);
+    } catch (error) {
+      setMessage(
+        error?.response?.data?.detail || "an error occred, please try again"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { message, loading, confessions, getConfessions, getUserConfession };
 };
 
 export default ConfessionAPI;

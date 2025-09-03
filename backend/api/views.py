@@ -58,6 +58,15 @@ class PkConfessionView(APIView):
         confession = self.get_confession(id)
         confession.delete()
         return Response(status=status.HTTP_200_OK)
+    
+
+
+class UserConfessions(APIView):
+    def get(self, request, user):
+        currentUser = get_object_or_404(User, username=user)
+        confessions = currentUser.confessions.all()
+        result = ConfessionReadSerializer(confessions, many=True)
+        return Response(result.data, status=status.HTTP_200_OK)
 
 
 

@@ -8,6 +8,7 @@ import Nav from "./pages/components/Nav";
 
 function App() {
   const Index = React.lazy(() => import("./pages/Index"));
+  const Profile = React.lazy(() => import("./pages/Profile"));
 
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
           <Suspense>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/:user/profile" element={<Profile />} />
               <Route
                 path="*"
                 element={

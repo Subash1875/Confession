@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import ConfessionAPI from "../apiRequests/ConfessionAPI";
+import { useParams } from "react-router-dom";
 import Loading from "./components/Loading";
 
-const Index = () => {
-  const { loading, message, confessions, getConfessions } = ConfessionAPI();
+const Profile = () => {
+  const { confessions, loading, message, getUserConfession } = ConfessionAPI();
+  const { user } = useParams();
 
   useEffect(() => {
-    getConfessions();
+    getUserConfession(user);
   }, []);
 
   const confessionDOM = () => {
@@ -16,12 +18,7 @@ const Index = () => {
           className="col-11 col-lg-5 p-4 shadow rounded-3 d-flex flex-column"
           key={index}
         >
-          <a
-            href={`${confession.user}/profile`}
-            className="fst-italic h4 text-decoration-none"
-          >
-            {confession.user}
-          </a>
+          <p className="fst-italic h4">{confession.user}</p>
 
           <div className="pt-5">
             <p className="fst-italic" style={{ whiteSpace: "pre-wrap" }}>
@@ -64,14 +61,30 @@ const Index = () => {
 
   return (
     <>
-      <p className="h4 fst-italic text-danger">{message}</p>
+      <div className="container-fluid">
+        <div>
+          <div className="d-flex pt-5">
+            <div>
+              <h2 className="fst-italic">Subash</h2>
+            </div>
 
-      <div className="container-fluid py-5">
-        <div className="row d-flex justify-content-evenly gap-5">
+            <div className="ms-auto px-3 btn btn-danger">
+              <i
+                className="bi bi-box-arrow-left pe-2"
+                style={{ fontSize: "1.2rem" }}
+              ></i>
+              <span className="h5">logout</span>
+            </div>
+          </div>
+          <hr />
+        </div>
+
+        <div className="row d-flex justify-content-evenly gap-5 py-4">
+          <p className="fst-italic h4 text-danger">{message}</p>
           {confessions.length > 0 ? (
             confessionDOM()
           ) : (
-            <p className="fst-italic h4">no confession to show</p>
+            <h3 className="fst-italic">no confessions to show</h3>
           )}
         </div>
       </div>
@@ -80,4 +93,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Profile;
