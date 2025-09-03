@@ -5,6 +5,6 @@ urlpatterns = [
     path("confessions/", views.ConfessionView.as_view()),
     path("confessions/<int:id>", views.PkConfessionView.as_view()),
     path("confessions/<str:user>", views.UserConfessions.as_view()),
-    path("signup/", views.signup),
-    path("login/", views.login),
+    path("user/signup/", views.signup),
+    path("user/login/", views.login),
 ]
