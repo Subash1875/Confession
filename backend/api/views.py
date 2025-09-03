@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 
 # models
@@ -60,6 +62,7 @@ class PkConfessionView(APIView):
 
 
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def signup(request):
     form = UserSerializer(data=request.data)
 
@@ -69,7 +72,7 @@ def signup(request):
         user.set_password(raw_password=request.data["password"])
         user.save()
         
-        token = Token.objects.create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
         print(token)
         return Response({"token" : token.key, "username" : user.username}, status=status.HTTP_201_CREATED)
     
@@ -78,5 +81,12 @@ def signup(request):
 
 
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def login(request):
-    return Response({"message" : "login"})
+    user = get_object_or_404(User, username=request.data["username"])
+
+    if not user.check_password(raw_password=request.data["password"]):
+        return Response({"detail" : "password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    token, _ = Token.objects.get_or_create(user=user)
+    return Response({"token" : token.key, "username" : user.username})

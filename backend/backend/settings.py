@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'rest_framework',
     'api',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    "default_authentication_classes" : {
+        "rest_framework.decorators.authentication_classes",
+        "rest_framework.decorators.permission_classes",
+    },
+    "default_permission_classes" : {
+        "rest_framewrok.permissions.IsAuthenticated"
+    }
+}
+
 
 ROOT_URLCONF = 'backend.urls'
 
