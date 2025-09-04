@@ -15,6 +15,7 @@ function App() {
   // auth components
   const Signup = React.lazy(() => import("./pages/authPages/Signup"));
   const Login = React.lazy(() => import("./pages/authPages/Login"));
+  const AddConfession = React.lazy(() => import("./pages/AddConfession"));
 
   return (
     <>
@@ -25,11 +26,17 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={token ? <Index /> : <Navigate to={"user/login"} />}
+                element={token ? <Index /> : <Navigate to={"/user/login"} />}
               />
               <Route
                 path="/:user/profile"
-                element={token ? <Profile /> : <Navigate to={"user/login"} />}
+                element={token ? <Profile /> : <Navigate to={"/user/login"} />}
+              />
+              <Route
+                path="/addConfession"
+                element={
+                  token ? <AddConfession /> : <Navigate to={"/user/login"} />
+                }
               />
               <Route
                 path="/user/signup"

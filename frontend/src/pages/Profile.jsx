@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import ConfessionAPI from "../apiRequests/ConfessionAPI";
 import { useParams } from "react-router-dom";
 import Loading from "./components/Loading";
@@ -6,10 +6,16 @@ import Loading from "./components/Loading";
 const Profile = () => {
   const { confessions, loading, message, getUserConfession } = ConfessionAPI();
   const { user } = useParams();
+  const authUser = localStorage.getItem("user");
 
   useEffect(() => {
     getUserConfession(user);
   }, []);
+
+  const logoutFunction = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  };
 
   const confessionDOM = () => {
     return confessions.map((confession, index) => {
@@ -63,18 +69,23 @@ const Profile = () => {
     <>
       <div className="container-fluid">
         <div>
-          <div className="d-flex pt-5">
+          <div className="d-flex pt-4">
             <div>
-              <h2 className="fst-italic">Subash</h2>
+              <h2 className="fst-italic">{user}</h2>
             </div>
 
-            <div className="ms-auto px-3 btn btn-danger">
-              <i
-                className="bi bi-box-arrow-left pe-2"
-                style={{ fontSize: "1.2rem" }}
-              ></i>
-              <span className="h5">logout</span>
-            </div>
+            {user === authUser && (
+              <div
+                className="ms-auto px-3 btn btn-danger"
+                onClick={() => logoutFunction()}
+              >
+                <i
+                  className="bi bi-box-arrow-left pe-2"
+                  style={{ fontSize: "1.2rem" }}
+                ></i>
+                <span className="h5">logout</span>
+              </div>
+            )}
           </div>
           <hr />
         </div>

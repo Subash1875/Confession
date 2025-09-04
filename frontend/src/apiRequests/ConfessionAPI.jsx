@@ -4,7 +4,7 @@ import axios from "axios";
 import Cookie from "js-cookie";
 
 const ConfessionAPI = () => {
-  const token = "8a4c80747f4b954f3f6eced53b02de04329b40e2";
+  const token = localStorage.getItem("token");
   const csrf_token = Cookie.get("csrftoken");
 
   const [message, setMessage] = useState(null);
@@ -50,7 +50,34 @@ const ConfessionAPI = () => {
     }
   };
 
-  return { message, loading, confessions, getConfessions, getUserConfession };
+  const addConfession = async (content) => {
+    setMessage(null);
+    setLoading(true);
+
+    try {
+      await axios.post(
+        "/api/confessions/",
+        { content },
+        { headers: { Authorization: `Token ${token}` } }
+      );
+      window.location.href = "/";
+    } catch (error) {
+      setMessage(
+        error?.response?.data?.detail || "an error occured, please try again"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    message,
+    loading,
+    confessions,
+    getConfessions,
+    getUserConfession,
+    addConfession,
+  };
 };
 
 export default ConfessionAPI;

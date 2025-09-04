@@ -1,6 +1,8 @@
 import logo from "../../static/img/logo.png";
 
 const Nav = () => {
+  const user = localStorage.getItem("user");
+
   return (
     <nav className="d-flex align-items-center px-4">
       <a
@@ -12,11 +14,14 @@ const Nav = () => {
       </a>
 
       <div className="d-flex gap-3 ms-auto">
-        <a href="/" className="fst-italic text-decoration-none text-white">
+        <a href="/addConfession" className="fst-italic text-decoration-none text-white">
           add confession
         </a>
-        <a href="/" className="fst-italic text-decoration-none text-white">
-          user
+        <a
+          href={`/${user}/profile`}
+          className="fst-italic text-decoration-none text-white"
+        >
+          {user}
         </a>
       </div>
     </nav>
