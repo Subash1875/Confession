@@ -17,7 +17,7 @@ const Index = () => {
           key={index}
         >
           <a
-            href={`${confession.user}/profile`}
+            href={`/${confession.id}/comments/`}
             className="fst-italic h4 text-decoration-none"
           >
             {confession.user}

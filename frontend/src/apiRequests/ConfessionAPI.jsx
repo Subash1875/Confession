@@ -1,11 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
-import Cookie from "js-cookie";
-
 const ConfessionAPI = () => {
   const token = localStorage.getItem("token");
-  const csrf_token = Cookie.get("csrftoken");
 
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);

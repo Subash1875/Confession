@@ -47,14 +47,15 @@
 
             {% if comments %}
             <div style="max-height: 200px; overflow: auto;" class="p-3 rounded-2 border border-1">
-                
+
                 {% for comment in comments %}
-                <div>
-                    <p class="fst-italic">{{comment}}</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'profile' comment.user %}" class="fst-italic text-decoration-none fw-bold text-dark">{{comment.user}} : </a>
+                    <span class="fst-italic">{{comment}}</span>
                     <hr>
                 </div>
                 {% endfor %}
-                
+
             </div>
             {% else %}
             <strong class="fst-italic text-danger">no comments</strong>

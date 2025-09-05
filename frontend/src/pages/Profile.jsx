@@ -24,7 +24,7 @@ const Profile = () => {
           className="col-11 col-lg-5 p-4 shadow rounded-3 d-flex flex-column"
           key={index}
         >
-          <p className="fst-italic h4">{confession.user}</p>
+          <a href={`/${confession.id}/comments`} className="fst-italic h4 text-decoration-none">{confession.user}</a>
 
           <div className="pt-5">
             <p className="fst-italic" style={{ whiteSpace: "pre-wrap" }}>

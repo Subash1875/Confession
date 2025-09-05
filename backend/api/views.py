@@ -11,10 +11,12 @@ from rest_framework.decorators import permission_classes
 # models
 from app.models.ConfessionModel import Confessions
 from django.contrib.auth.models import User
+from app.models.CommentModel import Comments
 
 # serializers
 from api.serializer.ConfessionSerializer import ConfessionReadSerializer, ConfessionWriteSerializer
 from api.serializer.UserSerializer import UserSerializer
+from api.serializer.CommentSerializer import CommentReadSerializer, CommentWriteSerializer
 
 
 # Create your views here.
@@ -41,7 +43,8 @@ class PkConfessionView(APIView):
         return confession
 
     def get(self, request, id):
-        result = ConfessionReadSerializer(self.get_confession(id))
+        confession = self.get_confession(id)
+        result = ConfessionReadSerializer(confession)
         return Response(result.data, status=status.HTTP_200_OK)
     
     def put(self, request, id):
@@ -59,14 +62,31 @@ class PkConfessionView(APIView):
         confession.delete()
         return Response(status=status.HTTP_200_OK)
     
-
-
 class UserConfessions(APIView):
     def get(self, request, user):
         currentUser = get_object_or_404(User, username=user)
         confessions = currentUser.confessions.all()
         result = ConfessionReadSerializer(confessions, many=True)
         return Response(result.data, status=status.HTTP_200_OK)
+
+
+class CommentView(APIView):
+    def get(self, request, id):
+        confession = get_object_or_404(Confessions, id=id)
+        comments = confession.comments.all()
+        result = CommentReadSerializer(comments, many=True)
+        return Response(result.data, status=status.HTTP_200_OK)
+    
+
+    def post(self, request, id):
+        form = CommentWriteSerializer(data=request.data)
+        confession = get_object_or_404(Confessions, id=id)
+
+        if form.is_valid():
+            form.save(user=request.user, confession=confession)
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

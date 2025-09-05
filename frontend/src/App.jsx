@@ -16,6 +16,7 @@ function App() {
   const Signup = React.lazy(() => import("./pages/authPages/Signup"));
   const Login = React.lazy(() => import("./pages/authPages/Login"));
   const AddConfession = React.lazy(() => import("./pages/AddConfession"));
+  const Confession = React.lazy(() => import("./pages/Confession"));
 
   return (
     <>
@@ -36,6 +37,12 @@ function App() {
                 path="/addConfession"
                 element={
                   token ? <AddConfession /> : <Navigate to={"/user/login"} />
+                }
+              />
+              <Route
+                path="/:id/comments/"
+                element={
+                  token ? <Confession /> : <Navigate to={"/user/login"} />
                 }
               />
               <Route
