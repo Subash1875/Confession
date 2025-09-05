@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from app.forms.ConfessionForm import ConfessionForm
 from django.contrib.auth.decorators import login_required
-from app.models.ConfessionModel import Confessions
 from django.contrib.auth.models import User
 from django.contrib import messages
+
+from app.models.ConfessionModel import Confessions
+from app.models.CommentModel import Comments
+
+from app.forms.ConfessionForm import ConfessionForm
+from app.forms.CommentForm import CommentForm
 
 
 @login_required(login_url="login")
@@ -30,6 +34,7 @@ def addConfession(request):
     return render(request, "addConfession.html", {"confessionForm" : confessionForm})
 
 
+@login_required(login_url="login")
 def profile(request, user):
 
     try:
@@ -40,3 +45,24 @@ def profile(request, user):
         confessions = []
 
     return render(request, "profile.html", {"confessions" : confessions, "user" : checkUser})
+
+
+
+@login_required(login_url="login")
+def PkConfession(request, id):
+    confession = get_object_or_404(Confessions, id=id)
+    comments = confession.comments.all()
+
+    if request.method == "POST":
+        commentForm = CommentForm(request.POST)
+
+        if commentForm.is_valid():
+            commentForm = commentForm.save(commit=False)
+            commentForm.user = request.user
+            commentForm.confession = confession
+            commentForm.save()
+            return redirect("confession", id=confession.id)
+    else:
+        commentForm = CommentForm()
+
+    return render(request, "Confession.html", {"confession" : confession, "commentForm" : commentForm, "comments" : comments})

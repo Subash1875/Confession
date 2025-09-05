@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% block title %} single confession {% endblock title %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row d-flex justify-content-center gap-4">
+
+        <div class="col-10 col-lg-5 border border-1 rounded-3 d-flex flex-column px-5 py-4">
+            <a href="{% url 'confession' confession.id %}" class="h4 fst-italic text-decoration-none py-3">
+                {{confession.user.username|capfirst}}
+            </a>
+
+            <div class="mt-auto">
+
+                <div>
+                    <div class="overflow-auto" style="max-height: 200px;">
+                        <span class="fst-italic" style="white-space: pre-wrap;">{{confession.content}}</span>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="d-flex align-items-center mt-4">
+                    <div class="d-flex gap-4">
+
+                        <!-- <a href="">
+                        <i class="bi bi-balloon-heart" style="font-size: 1.5rem; color: #000;"></i>
+                    </a> -->
+
+                        <a href="">
+                            <i class="bi bi-balloon-heart-fill" style="font-size: 1.5rem; color: red;"></i>
+                        </a>
+
+                        <a href="/">
+                            <i class="bi bi-chat-left-heart" style="font-size: 1.5rem; color: #000;"></i>
+                        </a>
+
+                    </div>
+                    <span class="ms-auto fst-italic" style="font-size: 12px;">{{confession.created_at|timesince}}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-10 col-lg-5 border rounded-3 px-5 py-4 d-flex flex-column justify-content-evenly gap-4">
+            <p class="h4 fst-italic">Comments</p>
+
+
+            {% if comments %}
+            <div style="max-height: 200px; overflow: auto;" class="p-3 rounded-2 border border-1">
+                
+                {% for comment in comments %}
+                <div>
+                    <p class="fst-italic">{{comment}}</p>
+                    <hr>
+                </div>
+                {% endfor %}
+                
+            </div>
+            {% else %}
+            <strong class="fst-italic text-danger">no comments</strong>
+            {% endif %}
+            <div>
+                <form action="{% url 'confession' confession.id  %}" method="post" class="d-flex gap-3 flex-column">
+                    {% csrf_token %}
+
+                    {{ commentForm.comment}}
+                    <input type="submit" value="post" class="btn btn-dark">
+                </form>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
+
+{% endblock content %}

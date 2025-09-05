@@ -1,6 +1,6 @@
 <div class="col-10 col-lg-5 border border-1 rounded-3 d-flex flex-column px-5 py-4">
 
-    <a href="{% url 'profile' confession.user.username %}" class="h4 fst-italic text-decoration-none py-3">
+    <a href="{% url 'confession' confession.id %}" class="h4 fst-italic text-decoration-none py-3">
         {{confession.user.username|capfirst}}
     </a>
 
