@@ -10,10 +10,16 @@ from app.forms.ConfessionForm import ConfessionForm
 from app.forms.CommentForm import CommentForm
 
 
+from django.core.paginator import Paginator
+
+
 @login_required(login_url="login")
 def index(request):
-    confessions = Confessions.objects.all()
+    data = Confessions.objects.all().order_by("-created_at")
 
+    p = Paginator(data, per_page=4)
+    page = request.GET.get("page")
+    confessions = p.get_page(page)
     return render(request, "index.html", {"confessions" : confessions})
 
 
@@ -39,7 +45,12 @@ def profile(request, user):
 
     try:
         checkUser = User.objects.get(username=user)
-        confessions = checkUser.confessions.all()
+        data = checkUser.confessions.all().order_by("-created_at")
+        
+        p = Paginator(data, per_page=4)
+        page = request.GET.get("page")
+        confessions = p.get_page(page)
+
     except User.DoesNotExist:
         checkUser = None
         confessions = []

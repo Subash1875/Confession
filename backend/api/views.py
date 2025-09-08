@@ -22,7 +22,7 @@ from api.serializer.CommentSerializer import CommentReadSerializer, CommentWrite
 # Create your views here.
 class ConfessionView(APIView):
     def get(self, request):
-        confessions = Confessions.objects.all()
+        confessions = Confessions.objects.all().order_by("-created_at")
         result = ConfessionReadSerializer(confessions, many=True)
         return Response(result.data, status=status.HTTP_200_OK)
     
@@ -65,7 +65,7 @@ class PkConfessionView(APIView):
 class UserConfessions(APIView):
     def get(self, request, user):
         currentUser = get_object_or_404(User, username=user)
-        confessions = currentUser.confessions.all()
+        confessions = currentUser.confessions.all().order_by("-created_at")
         result = ConfessionReadSerializer(confessions, many=True)
         return Response(result.data, status=status.HTTP_200_OK)
 
